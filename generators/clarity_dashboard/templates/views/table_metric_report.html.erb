@@ -1,0 +1,90 @@
+<script type="text/javascript" src="<%= javascript_path('clarity/date_picker') %>"></script>
+<%= stylesheet_link_tag("clarity/date_picker.css") %>
+
+<%- 
+	time_cw = "span-4"; # col width 
+	total_cw = "span-4";
+	num_cw = "span-3";
+-%>
+
+<br/>
+<div class='clearfix' style='margin-bottom: 0px;'>
+	<div style='float:left; margin-right: 12px'>
+		<h4 style='margin-bottom: 0px;'>
+			<!-- 9AM Mon. 10-13-09 -->
+			<input type="hidden" class="w16em" id="dp-1" name="dp-1" value="<%= @table.date_picker_value %>" />
+			<script type="text/javascript">
+			// <![CDATA[       
+				var update_date = function(data) {
+					var end_at = data.yyyy+'-'+data.mm+'-'+data.dd;
+					window.location = '?start_at='+end_at;
+				};
+				var opts = {     
+					// Attach input with an id of "dp-1" and give it a "d-sl-m-sl-Y" date format (e.g. 13/03/1990)                        
+					formElements:{"dp-1":"d-sl-m-sl-Y"},
+					rangeLow:"<%= @table.range(:low) %>",
+					rangeHigh:"<%= @table.range(:high) %>",
+					callbackFunctions:{
+						"dateset":[update_date]
+					}
+				};        
+				datePickerController.createDatePicker(opts);
+			// ]]>
+			</script>
+			<%= @table.date_label %>
+		</h4>
+	</div>
+	<div style='float:right'>	 
+		<a class='<%= "selected" if @table.interval==:hourly %> silver_button' href='<%= url_for(:interval => 'hourly') %>'>
+			<span>Hour</span>
+		</a>
+		<a class='<%= "selected" if @table.interval==:daily %> silver_button' href='<%= url_for(:interval => 'daily') %>'>
+			<span>Day</span>
+		</a>
+	</div>	
+</div>
+
+<div class='table_heading clearfix'>
+	<div class='<%= time_cw %>'>
+		<br/>
+	</div>
+	
+	<div class='<%= total_cw %>'>
+		Total
+	</div>
+	
+	<%- @table.groups.each do |group_name| -%>
+		<div class='<%= num_cw %>'>
+			<%= locale_name(group_name) %>
+		</div>
+	<% end %>
+</div>
+
+<%- @table.rows.each do |row| -%>
+	<div class='table_row clearfix'>
+		
+		<div class='<%= time_cw %>'>
+			<% if @table.interval==:daily %>
+				<a class='silver_button' href='<%= url_for(:interval => 'hourly', :start_at => row.start_at ) %>'>
+					<span><%= row.time_label %></span>
+				</a>
+			<% else %>	
+				<%= row.time_label %>
+			<% end %>
+		</div>
+		
+		<div class='<%= total_cw %>'>
+			<%= row.total %>
+		</div>
+		
+		<%- row.groups.each do |group| -%>
+			<div class='<%= num_cw %>'>
+				<%= group.total %>
+				<span class='sub_number'>
+					<%= group.local_percent %>%
+				</span>
+			</div>
+		<% end %>
+		
+	</div>
+<% end %>

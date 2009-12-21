@@ -1,0 +1,70 @@
+/* Nav Bar
+-------------------------------------------------------------- */
+.nav_bar {
+	background: #333;
+	color: #fff;
+}
+.nav_bar a {
+	color: #fff;
+}
+.nav_bar a:hover div, .nav_bar a.selected div {
+	background: #444;
+}
+.nav_bar div {
+	padding-top: 1em;
+	padding-bottom: 1em;
+	text-align: center;
+}                                                                
+
+/* Button
+-------------------------------------------------------------- */
+a.silver_button:hover {
+	background: none;
+	text-decoration: none;
+	color: #111;
+	cursor: pointer;
+}
+a.silver_button:hover span {
+	background: transparent url(/images/clarity/sprite.png) repeat-x left top;
+	border: 1px solid #333;
+}
+a.silver_button {
+	text-decoration: none;
+}
+a.silver_button span {
+	font-family: "futura";
+	border: 1px solid transparent;
+	color: #111;
+	padding: 4px 8px;
+}
+a.selected.silver_button span {
+	background-image: none;
+	background-color: #333;
+	border: 1px solid #333;
+	color: #fff;
+}                
+
+/* Table
+-------------------------------------------------------------- */ 
+/* Global */
+.table_heading div, .table_row div {
+	padding-left: 10px;
+	margin-right: 0px;
+	padding-top: 1em;
+	padding-bottom: 1em;
+}
+
+/* Heading */
+.table_heading {
+	background: #e3e3e3;
+	margin-top: 2em;
+}
+
+/* Row */
+.table_row {
+	border-top: 1px solid #e3e3e3;
+}
+.sub_number {
+	padding-left: 4px;
+	color: #aaa;
+}

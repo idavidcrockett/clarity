@@ -1,0 +1,31 @@
+<% @reports.each do |report| %>
+
+	<div class='table_heading clearfix'>
+		<div class='span-4'>
+			<%= report.name %>
+		</div>
+	
+		<% report.keynames.each do |keyname| %>
+			<div class='span-4'>
+				<%= keyname.humanize.titlecase %>
+			</div>
+		<% end %>
+	</div>
+
+	<% report.rows.each do |row| %>
+	
+		<div class='table_row clearfix'>
+	
+			<% date,counts = row %>
+			<div class='span-4'>
+				<%= date %>
+			</div>
+			<% counts.each do |count| %>
+				<div class='span-4'>
+					<%= number_with_delimiter(count) %>
+				</div>
+			<% end %>
+		</div>
+	<% end %>
+	
+<% end %>

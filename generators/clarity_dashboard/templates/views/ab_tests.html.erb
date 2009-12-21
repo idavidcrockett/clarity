@@ -1,0 +1,36 @@
+<%- @ab_tests.each do |keyname, t| -%>
+	
+	<div class='table_heading clearfix'>
+        <!-- Title -->
+		<div class='span-5'>
+			<%= t.human_name %>
+		</div>
+		<!-- Participants -->
+		<div class='span-5'>
+			Participants
+		</div>
+		<!-- Conversions -->
+		<%- t.sorted_metrics.each do |m| -%>
+			<div class='span-5 last'>
+				<%= m.human_name %>
+			</div>
+		<% end %>	
+	</div>
+	
+	<%- t.alternatives.each do |alt| -%>
+		<div class='table_row clearfix'>
+			<div class='span-5'>
+				<%= alt.value %>
+			</div>
+			<div class='span-5'>
+				<%= alt.participant_metric.track_count %>
+			</div>
+			<%- t.sorted_metrics.each do |m| -%>
+				<div class='span-5'>
+					<%= alt.conversion_metrics[m].track_count %>
+				</div>
+			<% end %>	
+		</div>
+	<% end %>
+	
+<% end %>
