@@ -1,0 +1,53 @@
+== Installation
+
+from your project's RAILS_ROOT, run:
+
+  script/plugin install -f git://github.com/idavidcrockett/clarity.git
+
+
+=== Clarity Dashboard
+
+  script/generate clarity_dashboard
+      
+
+== Usage
+
+=== Table Metric
+
+1.  create table metrics db:
+	script/generate clarity_table_metrics_table
+	rake db:migrate
+
+2.  set up active record model for tracking:
+	
+	class User < ActiveRecord::Base
+		track_table! :group => :language
+	end
+
+3.	add updater to cron or chores:
+	
+	task :every_five_minutes => :environment do
+		chore("every five minutes") do
+			User
+			Clarity::TableMetric.run_update
+		end
+	end
+
+4.	add table to the dashboard:
+	def users
+		@table = Clarity::TableMetricReport.new(
+			:users, 
+			:start_at => params[:start_at], 
+			:group_limit => 4, 
+			:interval => params[:interval]
+		)
+		render :action => 'table_metric_report'
+	end
+
+
+=== Metric
+
+=== a/b testing
+
+
+
